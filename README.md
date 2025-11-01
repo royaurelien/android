@@ -13,6 +13,12 @@ unzip platform-tools-latest-linux.zip -d ~
 ### Configure and initialize the LineageOS source repository
 
 ```bash
+
+
+sudo apt install python3-protobuf
+
+
+
 mkdir -p ~/bin
 mkdir -p ~/android/lineage
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
@@ -43,5 +49,37 @@ Get the release date from https://download.lineageos.org/devices/lynx/builds
 ```bash
 export LINEAGEOS_VERSION=lineage-22.2
 export RELEASE=20251031
-wget https://mirrorbits.lineageos.org/full/lynx/${RELEASE}/${LINEAGEOS_VERSION}-20251031-nightly-lynx-signed.zip -o source.zip
+wget https://mirrorbits.lineageos.org/full/lynx/${RELEASE}/${LINEAGEOS_VERSION}-20251031-nightly-lynx-signed.zip -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
 ```
+
+Follow the guide: extracting proprietary blobs from [payload-based OTAs](https://wiki.lineageos.org/extracting_blobs_from_zips#extracting-proprietary-blobs-from-payload-based-otas)
+
+```bash
+
+mkdir ~/android/system_dump/
+cd ~/android/system_dump/
+
+git clone https://github.com/LineageOS/android_prebuilts_extract-tools android/prebuilts/extract-tools
+git clone https://github.com/LineageOS/android_tools_extract-utils android/tools/extract-utils
+git clone https://github.com/LineageOS/android_system_update_engine android/system/update_engine
+
+unzip ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
+
+./android/prebuilts/extract-tools/linux-x86/bin/ota_extractor --payload payload.bin
+
+mkdir system/
+sudo mount -o ro system.img system/
+sudo mount -o ro vendor.img system/vendor/
+sudo mount -o ro odm.img system/odm/
+sudo mount -o ro product.img system/product/
+sudo mount -o ro system_ext.img system/system_ext/
+```
+
+Move to the root directory of the sources of your device and run`extract-files.py` as follows:
+
+```bash
+./extract-files.py ~/android/system_dump/
+sudo umount -R ~/android/system_dump/system/
+rm -rf ~/android/system_dump/
+```
+
