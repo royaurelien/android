@@ -38,6 +38,14 @@ repo sync -j4
 ```
 ### Preparing the build environment
 
+**Define the variables:**
+```bash
+export CODENAME=lynx
+export LINEAGEOS_VERSION=lineage-22.2
+export RELEASE=20251031
+```
+
+
 ```bash
 cd ~/android/lineage
 source build/envsetup.sh
@@ -47,9 +55,7 @@ breakfast lynx
 
 Get the release date from https://download.lineageos.org/devices/lynx/builds
 ```bash
-export LINEAGEOS_VERSION=lineage-22.2
-export RELEASE=20251031
-wget https://mirrorbits.lineageos.org/full/lynx/${RELEASE}/${LINEAGEOS_VERSION}-20251031-nightly-lynx-signed.zip -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
+wget https://mirrorbits.lineageos.org/full/${CODENAME}/${RELEASE}/${LINEAGEOS_VERSION}-${RELEASE}-nightly-${CODENAME}-signed.zip -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
 ```
 
 Follow the guide: extracting proprietary blobs from [payload-based OTAs](https://wiki.lineageos.org/extracting_blobs_from_zips#extracting-proprietary-blobs-from-payload-based-otas)
