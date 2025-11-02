@@ -1,6 +1,6 @@
 # Android
 
-> Pixel 7a (linx)
+> Pixel 7a (lynx)
 
 ### Install the platform-tools
 
@@ -78,6 +78,8 @@ sudo mount -o ro system_ext.img system/system_ext/
 Move to the root directory of the sources of your device and run`extract-files.py` as follows:
 
 ```bash
+breakfast lynx
+cd device/google/lynx
 ./extract-files.py ~/android/system_dump/
 sudo umount -R ~/android/system_dump/system/
 rm -rf ~/android/system_dump/
