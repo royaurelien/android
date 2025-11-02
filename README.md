@@ -55,7 +55,7 @@ breakfast lynx
 
 Get the release date from https://download.lineageos.org/devices/lynx/builds
 ```bash
-curl -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip https://mirrorbits.lineageos.org/full/${CODENAME}/${RELEASE}/${LINEAGEOS_VERSION}-${RELEASE}-nightly-${CODENAME}-signed.zip
+curl -L -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip "https://mirrorbits.lineageos.org/full/${CODENAME}/${RELEASE}/${LINEAGEOS_VERSION}-${RELEASE}-nightly-${CODENAME}-signed.zip"
 ```
 
 Follow the guide: extracting proprietary blobs from [payload-based OTAs](https://wiki.lineageos.org/extracting_blobs_from_zips#extracting-proprietary-blobs-from-payload-based-otas)
@@ -74,20 +74,34 @@ unzip ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
 ./android/prebuilts/extract-tools/linux-x86/bin/ota_extractor --payload payload.bin
 
 mkdir system/
-sudo mount -o ro system.img system/
-sudo mount -o ro vendor.img system/vendor/
-sudo mount -o ro odm.img system/odm/
-sudo mount -o ro product.img system/product/
-sudo mount -o ro system_ext.img system/system_ext/
+sudo mount -o rw system.img system/
+sudo mount -o rw product.img system/product/
+sudo mount -o rw system_ext.img system/system_ext/
 ```
 
 Move to the root directory of the sources of your device and run`extract-files.py` as follows:
 
 ```bash
-breakfast lynx
+
 cd device/google/lynx
 ./extract-files.py ~/android/system_dump/
 sudo umount -R ~/android/system_dump/system/
 rm -rf ~/android/system_dump/
+
+breakfast lynx
 ```
 
+
+https://github.com/TheMuppets/proprietary_vendor_google_lynx/tree/lineage-22.2
+
+From https://luk1337.github.io/muppets/
+
+```bash
+lineage/scripts/add-repo/add-repo.py add-project \
+    --name TheMuppets/proprietary_vendor_google_lynx \
+    --path vendor/google/lynx \
+    --remote github \
+    --file .repo/local_manifests/muppets.xml
+rm -rf vendor/google/lynx
+repo sync vendor/google/lynx
+```
