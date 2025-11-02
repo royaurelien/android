@@ -55,7 +55,7 @@ breakfast lynx
 
 Get the release date from https://download.lineageos.org/devices/lynx/builds
 ```bash
-wget https://mirrorbits.lineageos.org/full/${CODENAME}/${RELEASE}/${LINEAGEOS_VERSION}-${RELEASE}-nightly-${CODENAME}-signed.zip -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip
+curl -o ~/android/${LINEAGEOS_VERSION}-${RELEASE}.zip https://mirrorbits.lineageos.org/full/${CODENAME}/${RELEASE}/${LINEAGEOS_VERSION}-${RELEASE}-nightly-${CODENAME}-signed.zip
 ```
 
 Follow the guide: extracting proprietary blobs from [payload-based OTAs](https://wiki.lineageos.org/extracting_blobs_from_zips#extracting-proprietary-blobs-from-payload-based-otas)
